@@ -94,14 +94,31 @@ fi
 
 # ─── skillkit manifest ──────────────────────────────────────────────────
 echo ""
-if [[ -f "$TARGET_DIR/.skills" ]] && grep -q '^skills:' "$TARGET_DIR/.skills"; then
-  echo "→ .skills already present — skipping skillkit init"
+echo "→ Which AI agents will use this project? (skills will be installed for each)"
+read -rp "  Claude Code?    [Y/n] " agent_claude
+read -rp "  GitHub Copilot? [Y/n] " agent_copilot
+read -rp "  Pi Code?        [y/N] " agent_pi
+
+AGENTS=()
+[[ ! "$agent_claude"  =~ ^[nN]$ ]] && AGENTS+=(--agent claude-code)
+[[ ! "$agent_copilot" =~ ^[nN]$ ]] && AGENTS+=(--agent github-copilot)
+[[   "$agent_pi"      =~ ^[yY]$ ]] && AGENTS+=(--agent pi)
+
+if [[ ${#AGENTS[@]} -eq 0 ]]; then
+  echo "  ✗ no agents selected — skipping skill install"
 else
-  echo "→ initializing skillkit manifest"
-  (cd "$TARGET_DIR" && npx -y skillkit manifest init)
+  if [[ -f "$TARGET_DIR/.skills" ]] && grep -q '^skills:' "$TARGET_DIR/.skills"; then
+    echo "→ .skills already present — skipping skillkit init"
+  else
+    echo "→ initializing skillkit manifest"
+    (cd "$TARGET_DIR" && npx -y skillkit manifest init)
+  fi
+
   read -rp "Add pbakaus/impeccable (UI design skills)? [Y/n] " add_imp
   if [[ ! "$add_imp" =~ ^[nN]$ ]]; then
     (cd "$TARGET_DIR" && npx -y skillkit manifest add pbakaus/impeccable)
+    echo "→ installing impeccable skills for: ${AGENTS[*]}"
+    (cd "$TARGET_DIR" && npx -y skillkit install pbakaus/impeccable "${AGENTS[@]}" --all --yes)
   fi
 fi
 
@@ -113,8 +130,11 @@ cat <<EOF
 Next steps:
   1. cp .env.example .env   # fill in real values
   2. direnv allow           # install direnv first if needed
-  3. npx skillkit manifest install
-  4. Review AGENTS.md and README.md, adapt to your project
-  5. git add . && git commit -m "ai setup"
+  3. Review AGENTS.md and README.md, adapt to your project
+  4. git add . && git commit -m "ai setup"
+
+To re-install skills later (e.g. after pulling manifest changes):
+  npx skillkit install <source> --agent claude-code --agent github-copilot --all --yes
+  # add --agent pi if using Pi Code
 
 EOF

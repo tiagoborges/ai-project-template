@@ -1,6 +1,8 @@
 # AGENTS.md
 
-Shared guidance for all AI assistants working in this repository (Claude Code, Cursor, Copilot, etc.).
+Shared guidance for all AI assistants working in this repository (Claude Code, GitHub Copilot, Pi Code, Cursor, etc.).
+
+> **Pi Code note:** Pi reads `AGENTS.md` / `CLAUDE.md` and skills from `.pi/skills/`, but [does not support MCP by design](https://mariozechner.at/posts/2025-11-02-what-if-you-dont-need-mcp/). MCP servers (`.mcp.json`, `.vscode/mcp.json`, `.github/copilot/*.json`) are used by Claude Code, VS Code, and Copilot CLI only.
 
 ## Overview
 
@@ -33,8 +35,10 @@ cp .env.example .env
 #    Install: brew install direnv (or apt/pacman) + hook in ~/.zshrc
 direnv allow
 
-# 3. Fetch external AI skills listed in .skills
-npx skillkit manifest install
+# 3. Fetch external AI skills listed in .skills (pick the agents you use)
+npx skillkit install pbakaus/impeccable \
+  --agent claude-code --agent github-copilot --all --yes
+#  add --agent pi for Pi Code
 
 # 4. Assistants pick up configs automatically
 ```
@@ -50,7 +54,9 @@ npx skillkit manifest install
 | `.vscode/mcp.json` | MCP servers for VS Code / Copilot | yes |
 | `.github/copilot/*.json` | MCP servers for Copilot CLI | yes |
 | `.skills` | skillkit manifest | yes |
-| `.claude/skills/` | Fetched by skillkit | no (gitignored) |
+| `.claude/skills/` | Fetched by skillkit (Claude Code) | no (gitignored) |
+| `.github/skills/` | Fetched by skillkit (Copilot) | no (gitignored) |
+| `.pi/skills/` | Fetched by skillkit (Pi Code) | no (gitignored) |
 | `.env.example` | Env var template | yes |
 | `.env` | Real secrets | no (gitignored) |
 

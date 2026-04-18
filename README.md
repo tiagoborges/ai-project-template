@@ -1,6 +1,8 @@
 # ai-project-template
 
-Opinionated template that wires **Claude Code**, **GitHub Copilot**, and **VS Code** into any project with a single source of truth for MCP servers, skills, and secrets.
+Opinionated template that wires **Claude Code**, **GitHub Copilot**, **VS Code**, and **Pi Code** into any project with a single source of truth for MCP servers, skills, and secrets.
+
+> Pi Code is supported for `AGENTS.md` + skills (`.pi/skills/`). Pi [does not use MCP by design](https://mariozechner.at/posts/2025-11-02-what-if-you-dont-need-mcp/); MCP configs apply to the other three assistants.
 
 Drop this into a new repo (template) or a repo you already have (install script).
 

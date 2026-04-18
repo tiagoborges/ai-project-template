@@ -10,3 +10,5 @@
 
 # skillkit-managed skills — fetched by `skillkit manifest install`
 /.claude/skills/
+/.pi/skills/
+/.github/skills/
