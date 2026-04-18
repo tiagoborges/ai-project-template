@@ -1,0 +1,13 @@
+{
+    "servers": {
+        "{{PROJECT_SLUG}}-prod": {
+            "command": "npx",
+            "args": ["-y", "@automattic/mcp-wordpress-remote@latest"],
+            "env": {
+                "WP_API_URL": "https://{{PROD_URL}}/wp-json/mcp/mcp-adapter-default-server",
+                "WP_API_USERNAME": "${env:{{PROJECT_UPPER}}_WP_USER}",
+                "WP_API_PASSWORD": "${env:{{PROJECT_UPPER}}_WP_PASS}"
+            }
+        }
+    }
+}

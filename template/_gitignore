@@ -1,0 +1,12 @@
+# Secrets
+.env
+
+# Editor / OS
+.DS_Store
+/.idea/
+
+# Per-user AI tool settings
+/.claude/settings.local.json
+
+# skillkit-managed skills — fetched by `skillkit manifest install`
+/.claude/skills/
