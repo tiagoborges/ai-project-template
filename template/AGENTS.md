@@ -19,50 +19,7 @@ _List frequent commands here (build, test, deploy, etc.)._
 
 ## Multi-AI / Multi-Machine Setup
 
-This repo is developed with several AI assistants (Claude Code, GitHub Copilot, VS Code, Cursor). Configuration is unified so any contributor on any computer gets the same skills and MCP servers after `git clone`.
-
-### Bootstrap on a new machine
-
-```bash
-git clone <repo>
-cd {{PROJECT_SLUG}}
-
-# 1. Secrets
-cp .env.example .env
-# Fill in the required values.
-
-# 2. direnv — auto-loads .env on cd (one-time per machine)
-#    Install: brew install direnv (or apt/pacman) + hook in ~/.zshrc
-direnv allow
-
-# 3. Fetch external AI skills listed in .skills (pick the agents you use)
-npx skillkit install pbakaus/impeccable \
-  --agent claude-code --agent github-copilot --all --yes
-#  add --agent pi for Pi Code
-
-# 4. Assistants pick up configs automatically
-```
-
-### File layout
-
-| Path | Purpose | Committed? |
-|---|---|---|
-| `AGENTS.md` | Shared docs for all AI assistants | yes |
-| `CLAUDE.md` | Claude Code entry → AGENTS.md | yes |
-| `.github/copilot-instructions.md` | Copilot entry → AGENTS.md | yes |
-| `.mcp.json` | MCP servers for Claude Code | yes |
-| `.vscode/mcp.json` | MCP servers for VS Code / Copilot | yes |
-| `.github/copilot/*.json` | MCP servers for Copilot CLI | yes |
-| `.skills` | skillkit manifest | yes |
-| `.claude/skills/` | Fetched by skillkit (Claude Code) | no (gitignored) |
-| `.github/skills/` | Fetched by skillkit (Copilot) | no (gitignored) |
-| `.pi/skills/` | Fetched by skillkit (Pi Code) | no (gitignored) |
-| `.env.example` | Env var template | yes |
-| `.env` | Real secrets | no (gitignored) |
-
-### Secrets
-
-All MCP configs reference credentials via `${env:VAR_NAME}`. Real values live in `.env`, loaded by direnv. If a credential is ever pushed, rotate it immediately.
+> See [`docs/multi-agents.md`](./docs/multi-agents.md) for file layout, bootstrap steps, MCP servers, secrets policy, and skills management.
 
 ## Safety & Pitfalls
 

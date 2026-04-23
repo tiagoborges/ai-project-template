@@ -8,7 +8,7 @@
 # Per-user AI tool settings
 /.claude/settings.local.json
 
-# skillkit-managed skills — fetched by `skillkit manifest install`
+# AI agent skills — managed by npx skills (see skills-lock.json)
+/.agents/skills/
 /.claude/skills/
 /.pi/skills/
-/.github/skills/

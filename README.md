@@ -18,8 +18,8 @@ Drop this into a new repo (template) or a repo you already have (install script)
 | `CLAUDE.md` | Claude Code entry pointing at AGENTS.md |
 | `AGENTS.md` | Single doc read by all AI assistants |
 | `README.md` | Bootstrap + architecture for contributors |
-| `.skills` | [skillkit](https://github.com/rohitg00/skillkit) manifest for external skills |
-| `.gitignore` | Ignores `.env`, `.claude/skills/`, etc. |
+| `skills-lock.json` | [npx skills](https://skills.sh) lockfile — tracks installed skills |
+| `.gitignore` | Ignores `.env`, `/.agents/skills/`, `/.claude/skills/`, `/.pi/skills/` |
 
 All MCP configs reference credentials via `${env:VAR}`. Real values live in `.env`, loaded automatically by [direnv](https://direnv.net/).
 
@@ -54,7 +54,7 @@ The script will:
 2. Copy templated files into your project (skipping anything that already exists)
 3. Substitute placeholders (`{{PROJECT_SLUG}}`, `{{PROD_URL}}`, etc.)
 4. Merge entries into your existing `.gitignore`
-5. Initialize a [skillkit](https://github.com/rohitg00/skillkit) manifest and optionally add `pbakaus/impeccable`
+5. Install skills via [`npx skills`](https://skills.sh) for the agents you selected
 
 ## Placeholders
 
@@ -65,7 +65,7 @@ The script will:
 | `{{PROD_URL}}` | `example.com` | Production WP MCP URL |
 | `{{STAGE_URL}}` | `stage.example.com` | Staging WP MCP URL |
 
-## Bootstrap on a machine (prerequisites)
+## Prerequisites
 
 ```bash
 # direnv (auto-load .env on cd)
@@ -73,7 +73,7 @@ brew install direnv              # or: apt install direnv / pacman -S direnv
 echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc   # or bash
 source ~/.zshrc
 
-# skillkit is used via npx — no install needed
+# npx skills is used via npx — no install needed
 ```
 
 ## Customizing
